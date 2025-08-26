@@ -1,0 +1,136 @@
+﻿Altcase Supplier Portal
+Objective
+To create a dedicated portal for Altcase suppliers of unlisted shares. The portal will enable two-way interactions:
+1. Altcase Demand Posting - Suppliers can view demand from Altcase (generated from investor/IFA system) and submit quotes.
+
+2. Supplier Sell Requests - Suppliers can initiate selling opportunities to Altcase by posting availability.
+
+This ensures smoother deal flow, faster execution, and transparent supplier engagement.
+
+Stakeholders
+● Suppliers - External brokers/suppliers of unlisted shares.
+
+● Altcase Admin - Internal Altcase team managing deals, approvals, and contracts.
+
+● System Integrations - Investor/IFA system, Altcase inventory, SPA generation engine.
+
+User Roles
+● Supplier
+
+○ Login and view dashboard
+
+○ Respond to Altcase demand with quote
+
+○ Post availability for shares they want to sell
+
+○ Track status of submitted quotes/deals
+
+● Altcase Admin
+
+○ Post demand (auto-generated from IFA/investor system if inventory not available)
+
+○ Review supplier quotes
+
+○ Select best deal (system to recommend optimal based on price/TAT/other factors)
+
+○ Trigger SPA/Contract auto-generation
+
+○ Manage supplier accounts and permissions
+
+
+Key Use Cases
+Altcase Demand → Supplier Quotes
+Flow:
+1. Demand generated (from IFA/investor system when shares not in inventory).
+
+2. Demand posted on Supplier Portal (share name, qty, expected price).
+
+3. Supplier views demand and submits a quote:
+
+○ Fulfillment Price
+
+○ TAT (time to deliver)
+
+○ Other remarks (optional)
+
+4. Altcase Admin receives all supplier quotes in backend.
+
+5. System recommends best deal (lowest price, fastest TAT, reliability score if available).[1]
+
+6. Admin clicks BUY DEAL → SPA/Contract auto-generated → sent to supplier + stored in Altcase system.
+
+
+Supplier Sell Request → Altcase Buy Decision
+Flow:
+1. Supplier has availability of shares and wants to sell.
+
+2. Supplier logs into portal → Submits availability (share name, qty, price, validity).
+
+3. Altcase Admin reviews incoming offers.
+
+4. Admin decides to accept/bid → moves deal through approval process.
+
+5. On acceptance, SPA/Contract generated and routed through Altcase books.
+
+
+Core Features
+Supplier Features
+● Secure login & dashboard
+
+● View all active Altcase demand requests
+
+● Submit quotes (price, TAT, remarks)
+
+● Post share availability for sale
+
+● Track status of submissions (Pending, Accepted, Rejected, Processing, Completed)
+
+Admin Features
+● Auto-generated demand from investor/IFA system when no inventory available
+
+● Demand posting (manual + automated)
+
+● View supplier quotes in comparative table
+
+● AI/system recommendation of best deal (price + TAT + supplier credibility)
+
+● Buy deal execution → SPA/Contract auto-generation
+
+● Manage supplier availability requests
+
+● Admin dashboard for deal history, supplier performance, and fulfillment tracking
+
+Integrations
+● Investor/IFA System - Trigger demand creation when inventory unavailable
+
+● Altcase Inventory System - Cross-check share availability
+
+● Contract Generation System - Auto-generate SPA/Contracts
+
+● Notification System - Email/SMS/WhatsApp alerts to suppliers & admins
+
+
+Success Metrics
+● Faster turnaround time from demand to deal closure
+
+● Increased supplier participation & competition
+
+● Reduced manual coordination between suppliers and Altcase team
+
+● Error-free automated contract generation
+
+Future Enhancements (Phase 2)
+● Supplier rating & reliability scoring
+
+● Auto-matching engine (system auto-picks best supplier quote)
+
+● Analytics dashboard (demand vs supply trends, supplier performance)
+
+● Payment tracking & integration
+
+
+
+Is this best deal recommendation meant for the ADMIN on the ADMIN portal? Please correct me if I'm wrong.
+
+@shaurya@altcase.com
+_Assigned to shaurya@altcase.com_
