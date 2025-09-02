@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { FaShoppingCart, FaChartBar, FaEye, FaUsers, FaRocket } from 'react-icons/fa';
 import { 
-  ShareCard, 
   PurchaseModal, 
   SharesFilter, 
   SharesFilterModal,
   ExpressInterestModal 
 } from './components';
+import ShareCard from '../../components/ui/ShareCard';
 import { useSharesToBuy } from './hooks/useSharesToBuy';
 
 export default function SharesToBuyFeature() {
@@ -105,7 +105,7 @@ export default function SharesToBuyFeature() {
 
   return (
     <div className="h-auto min-h-full w-full  p-4">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-[1480px] mx-auto">
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
           <div>
@@ -307,8 +307,10 @@ export default function SharesToBuyFeature() {
               <ShareCard
                 key={share.id}
                 share={share}
-                onPurchase={handlePurchase}
-                onExpressInterest={handleExpressInterest}
+                onBuyNow={handlePurchase}
+                showBuyButton={true}
+                buyButtonText="Purchase"
+                buttonVariant="primary"
               />
             ))}
           </div>

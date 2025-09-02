@@ -37,7 +37,7 @@ const BannerCarousel = () => {
   }, []);
 
   return (
-    <div className="mb-12 relative">
+    <div className="mb-4 relative">
       <div className="relative overflow-hidden rounded-2xl shadow-lg">
         <Swiper
           ref={swiperRef}

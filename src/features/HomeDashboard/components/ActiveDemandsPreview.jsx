@@ -2,26 +2,62 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaChartLine, FaBuilding, FaRupeeSign, FaClock, FaExclamationTriangle, FaArrowRight } from 'react-icons/fa';
 import activeDemandService from '../../ActiveDemands/activeDemands.service';
+import DemandCard from '../../../components/ui/DemandCard';
+import SubmitQuoteModal from '../../../components/ui/SubmitQuoteModal';
+
+// Hook to get screen size and determine card count
+const useResponsiveCards = () => {
+  const [screenSize, setScreenSize] = useState('xl');
+  const [cardCount, setCardCount] = useState(4);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+      if (width >= 1280) {
+        setScreenSize('xl');
+        setCardCount(3);
+      } else if (width >= 1024) {
+        setScreenSize('lg');
+        setCardCount(3);
+      } else if (width >= 768) {
+        setScreenSize('md');
+        setCardCount(4);
+      } else {
+        setScreenSize('sm');
+        setCardCount(4);
+      }
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  return { screenSize, cardCount };
+};
 
 const ActiveDemandsPreview = () => {
   const [demands, setDemands] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedDemand, setSelectedDemand] = useState(null);
+  const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
   const navigate = useNavigate();
+  const { screenSize, cardCount } = useResponsiveCards();
 
   useEffect(() => {
     const fetchDemands = async () => {
       try {
         setIsLoading(true);
         const response = await activeDemandService.getDemands();
-        // Get only the newest 3 demands
+        // Get demands based on screen size
         const latestDemands = (response.data || response)
           .sort((a, b) => new Date(b.postedAt) - new Date(a.postedAt))
-          .slice(0, 3);
+          .slice(0, cardCount);
         setDemands(latestDemands);
       } catch (error) {
         console.error('Error fetching demands preview:', error);
         // Use dummy data fallback
-        setDemands([
+        const dummyData = [
           {
             id: 'd1',
             companyName: 'Reliance Industries',
@@ -54,15 +90,27 @@ const ActiveDemandsPreview = () => {
             expectedTat: '5 days',
             priority: 'Medium',
             postedAt: '2024-07-21T09:00:00Z'
+          },
+          {
+            id: 'd4',
+            companyName: 'Infosys',
+            shareType: 'Equity',
+            sector: 'Information Technology',
+            quantity: 750,
+            expectedPrice: 1850,
+            expectedTat: '2 days',
+            priority: 'High',
+            postedAt: '2024-07-22T14:00:00Z'
           }
-        ]);
+        ];
+        setDemands(dummyData.slice(0, cardCount));
       } finally {
         setIsLoading(false);
       }
     };
 
     fetchDemands();
-  }, []);
+  }, [cardCount]);
 
   const getPriorityColor = (priority) => {
     switch (priority?.toLowerCase()) {
@@ -107,21 +155,44 @@ const ActiveDemandsPreview = () => {
     navigate('/demands');
   };
 
-  const handleQuoteNow = (demandId) => {
-    navigate('/demands', { state: { openQuoteModal: demandId } });
+  const handleQuoteNow = (demand) => {
+    setSelectedDemand(demand);
+    setIsQuoteModalOpen(true);
+  };
+
+  const handleCloseQuoteModal = () => {
+    setIsQuoteModalOpen(false);
+    setSelectedDemand(null);
+  };
+
+  // Get responsive grid classes based on screen size
+  const getGridClasses = () => {
+    switch (screenSize) {
+      case 'xl': // 1280px+: 4 cards in 1 row
+        return 'grid grid-cols-3 gap-6';
+      case 'lg': // 1024px-1279px: 3 cards in 1 row
+        return 'grid grid-cols-3 gap-6';
+      case 'md': // 768px-1023px: 4 cards in 2 rows (2x2)
+        return 'grid grid-cols-2 gap-4';
+      default: // <768px: 4 cards in 4 rows (1x4)
+        return 'grid grid-cols-1 gap-4';
+    }
   };
 
   if (isLoading) {
     return (
-      <div className="py-8">
-        <div className="flex items-center gap-4 mb-8">
-          <div className="flex items-center gap-2">
-            <div className="h-3 w-3 bg-theme-bgSecondary rounded-full animate-pulse"></div>
+      <div className="py-4">
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2">
+              <div className="h-3 w-3 bg-theme-bgSecondary rounded-full animate-pulse"></div>
+            </div>
+            <div className="h-7 bg-theme-bgSecondary rounded w-40 animate-pulse"></div>
           </div>
-          <div className="h-7 bg-theme-bgSecondary rounded w-40 animate-pulse"></div>
+          <div className="h-8 bg-theme-bgSecondary rounded w-20 animate-pulse"></div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-          {[...Array(3)].map((_, index) => (
+        <div className={`${getGridClasses()} mb-4`}>
+          {[...Array(cardCount)].map((_, index) => (
             <div key={index} className="bg-theme-cardBg rounded-xl p-6 border border-theme-borderSecondary/50 animate-pulse">
               <div className="h-6 bg-theme-borderSecondary rounded mb-4 w-32"></div>
               <div className="h-4 bg-theme-borderSecondary rounded mb-4 w-full"></div>
@@ -134,92 +205,48 @@ const ActiveDemandsPreview = () => {
             </div>
           ))}
         </div>
-        <div className="flex justify-center">
-          <div className="h-12 bg-theme-borderSecondary rounded-lg w-32 animate-pulse"></div>
-        </div>
       </div>
     );
   }
 
   return (
-    <div className="py-8">
+    <div className="">
       {/* Section Header */}
-      <div className="flex items-center gap-4 mb-8">
-        <div className="flex items-center gap-2">
-          {/* Red Ping Animation */}
-          <span className="relative flex h-3 w-3">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
-          </span>
+      <div className="flex items-center mb-3">
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2">
+            {/* Red Ping Animation */}
+            <span className="relative flex h-3 w-3">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+            </span>
+          </div>
+          <h2 className="text-2xl font-bold text-theme-accentLight">Active Demands</h2>
         </div>
-        <h2 className="text-2xl font-bold text-theme-accentLight">Active Demands</h2>
       </div>
 
       {/* Demands Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+      <div className={`${getGridClasses()} mb-4`}>
         {demands.map((demand) => (
-          <div
+          <DemandCard
             key={demand.id}
-            className="bg-theme-cardBg rounded-xl p-6 border border-theme-borderSecondary/50 hover:border-primary/30 transition-all duration-300 hover:shadow-lg"
-          >
-
-            <div className="flex flex-col-reverse md:flex-row items-start md:items-center justify-between mb-4 gap-3">
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center">
-                  <FaBuilding className="w-4 h-4 text-primary" />
-                </div>
-                <div>
-                <h3 className="font-semibold text-theme-textPrimary text-base">{demand.companyName}</h3>
-           
-                </div>
-                
-              </div>
-           
-            </div>
-            {/* Company Header */}
-         
-
-            {/* Share Details */}
-
-
-            {/* Key Info */}
-            <div className="space-y-3 mb-4">
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-theme-textSecondary">Quantity</span>
-                <span className="text-sm font-medium text-theme-textPrimary">{demand.quantity.toLocaleString()}</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-theme-textSecondary">Expected Price</span>
-                <span className="text-sm font-medium text-primary">₹{demand.expectedPrice.toLocaleString()}</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-theme-textSecondary">TAT</span>
-                <span className="text-sm font-medium text-theme-textPrimary">{demand.expectedTat}</span>
-              </div>
-            </div>
-
-            {/* Priority and Date */}
-        
-
-            {/* Quote Button */}
-            <button
-              onClick={() => handleQuoteNow(demand.id)}
-              className="w-full px-4 py-3 bg-primary hover:bg-primary/90 text-white text-sm font-medium rounded-lg transition-colors"
-            >
-              Quote Now
-            </button>
-          </div>
+            demand={demand}
+            onQuoteNow={handleQuoteNow}
+            showQuoteButton={true}
+            buttonText="Quote Now"
+            buttonVariant="primary"
+          />
         ))}
       </div>
 
       {/* Centered View All Button */}
-      <div className="flex justify-center">
+      <div className="flex justify-center mt-6">
         <button
           onClick={handleViewAll}
-          className="flex items-center gap-2 px-6 py-3 bg-primary/10 hover:bg-primary/20 text-primary hover:text-primary/80 transition-colors font-medium rounded-lg border border-primary/20"
+          className="flex items-center gap-2 px-4 py-2 bg-primary/10 hover:bg-primary/20 text-primary hover:text-primary/80 transition-colors font-medium rounded-lg border border-primary/20"
         >
-          <span className="text-base">View All</span>
-          <FaArrowRight className="w-4 h-4" />
+          <span className="text-sm">View All</span>
+          <FaArrowRight className="w-3 h-3" />
         </button>
       </div>
 
@@ -229,6 +256,14 @@ const ActiveDemandsPreview = () => {
           <p className="text-theme-textSecondary text-lg">No active demands available</p>
         </div>
       )}
+
+      {/* Submit Quote Modal */}
+      <SubmitQuoteModal
+        isOpen={isQuoteModalOpen}
+        onClose={handleCloseQuoteModal}
+        demand={selectedDemand}
+        onSubmitSuccess={activeDemandService.submitQuote}
+      />
     </div>
   );
 };

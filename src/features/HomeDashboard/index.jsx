@@ -56,7 +56,7 @@ export default function HomeDashboard() {
   return (
     <div className="h-auto min-h-full">
       {/* Main Dashboard Container */}
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-8">
+      <div className="max-w-[1480px] mx-auto">
         {/* Banner Carousel */}
         <BannerCarousel />
         
@@ -71,7 +71,7 @@ export default function HomeDashboard() {
         <QuickActions />
 
         {/* Preview Sections */}
-        <div className="space-y-12 mb-12">
+        <div className="">
           {/* Active Demands Preview */}
           <ActiveDemandsPreview />
           

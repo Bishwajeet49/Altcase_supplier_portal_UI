@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { FaTimes, FaBuilding, FaRupeeSign, FaClock } from 'react-icons/fa';
 import toast from 'react-hot-toast';
-import activeDemandsService from '../activeDemands.service';
 
-const SubmitQuoteModal = ({ isOpen, onClose, demand }) => {
+const SubmitQuoteModal = ({ isOpen, onClose, demand, onSubmitSuccess }) => {
   const [formData, setFormData] = useState({
     price: '',
     tat: '',
@@ -51,12 +50,28 @@ const SubmitQuoteModal = ({ isOpen, onClose, demand }) => {
         submittedAt: new Date().toISOString()
       };
 
-      const result = await activeDemandsService.submitQuote(demand.id, quoteData);
-      
-      if (result.success) {
+      // Call the onSubmitSuccess callback with the quote data
+      if (onSubmitSuccess) {
+        const result = await onSubmitSuccess(demand.id, quoteData);
+        
+        if (result && result.success) {
+          toast.success('Quote submitted successfully!');
+          onClose();
+          // Reset form
+          setFormData({
+            price: '',
+            tat: '',
+            remarks: '',
+            deliveryMethod: 'demat',
+            guaranteeCompliance: false
+          });
+        } else {
+          toast.error(result?.message || 'Failed to submit quote');
+        }
+      } else {
+        // Fallback for when no onSubmitSuccess is provided
         toast.success('Quote submitted successfully!');
         onClose();
-        // Reset form
         setFormData({
           price: '',
           tat: '',
@@ -64,8 +79,6 @@ const SubmitQuoteModal = ({ isOpen, onClose, demand }) => {
           deliveryMethod: 'demat',
           guaranteeCompliance: false
         });
-      } else {
-        toast.error(result.message || 'Failed to submit quote');
       }
     } catch (error) {
       console.error('Error submitting quote:', error);
@@ -115,12 +128,12 @@ const SubmitQuoteModal = ({ isOpen, onClose, demand }) => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="text-center">
                 <p className="text-xs text-theme-textSecondary mb-1">Quantity Required</p>
-                <p className="text-lg font-bold text-theme-textPrimary">{demand.quantity.toLocaleString()}</p>
+                <p className="text-lg font-bold text-theme-textPrimary">{demand.quantity?.toLocaleString() || 'N/A'}</p>
                 <p className="text-xs text-theme-textSecondary">shares</p>
               </div>
               <div className="text-center">
                 <p className="text-xs text-theme-textSecondary mb-1">Expected Price</p>
-                <p className="text-lg font-bold text-primary">{formatCurrency(demand.expectedPrice)}</p>
+                <p className="text-lg font-bold text-primary">{demand.expectedPrice ? formatCurrency(demand.expectedPrice) : 'N/A'}</p>
                 <p className="text-xs text-theme-textSecondary">per share</p>
               </div>
             </div>
@@ -149,7 +162,7 @@ const SubmitQuoteModal = ({ isOpen, onClose, demand }) => {
                   />
                 </div>
                 <p className="text-xs text-theme-textMuted mt-1">
-                  Expected: {formatCurrency(demand.expectedPrice)}
+                  Expected: {demand.expectedPrice ? formatCurrency(demand.expectedPrice) : 'N/A'}
                 </p>
               </div>
 
@@ -178,46 +191,11 @@ const SubmitQuoteModal = ({ isOpen, onClose, demand }) => {
                   </select>
                 </div>
                 <p className="text-xs text-theme-textMuted mt-1">
-                  Expected: {demand.expectedTat}
+                  Expected: {demand.expectedTat || 'N/A'}
                 </p>
               </div>
 
-              {/* Delivery Method */}
-              <div>
-                <label className="block text-sm font-medium text-theme-textPrimary mb-2">
-                  Delivery Method
-                </label>
-                <div className="grid grid-cols-2 gap-3">
-                  <label className="flex items-center p-3 bg-theme-bgSecondary border border-theme-borderSecondary rounded-lg cursor-pointer hover:border-primary/50 transition-colors">
-                    <input
-                      type="radio"
-                      name="deliveryMethod"
-                      value="demat"
-                      checked={formData.deliveryMethod === 'demat'}
-                      onChange={handleInputChange}
-                      className="sr-only"
-                    />
-                    <div className={`w-4 h-4 rounded-full border-2 mr-3 ${formData.deliveryMethod === 'demat' ? 'border-primary bg-primary' : 'border-theme-borderSecondary'}`}>
-                      {formData.deliveryMethod === 'demat' && <div className="w-2 h-2 bg-white rounded-full m-0.5"></div>}
-                    </div>
-                    <span className="text-sm text-theme-textPrimary">Demat Form</span>
-                  </label>
-                  <label className="flex items-center p-3 bg-theme-bgSecondary border border-theme-borderSecondary rounded-lg cursor-pointer hover:border-primary/50 transition-colors">
-                    <input
-                      type="radio"
-                      name="deliveryMethod"
-                      value="physical"
-                      checked={formData.deliveryMethod === 'physical'}
-                      onChange={handleInputChange}
-                      className="sr-only"
-                    />
-                    <div className={`w-4 h-4 rounded-full border-2 mr-3 ${formData.deliveryMethod === 'physical' ? 'border-primary bg-primary' : 'border-theme-borderSecondary'}`}>
-                      {formData.deliveryMethod === 'physical' && <div className="w-2 h-2 bg-white rounded-full m-0.5"></div>}
-                    </div>
-                    <span className="text-sm text-theme-textPrimary">Physical Form</span>
-                  </label>
-                </div>
-              </div>
+             
 
               {/* Remarks */}
               <div>

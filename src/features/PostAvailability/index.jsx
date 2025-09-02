@@ -126,99 +126,85 @@ export default function PostAvailabilityFeature() {
   }
 
   return (
-    <div className="h-auto min-h-full w-full  p-4">
-      <div className="max-w-7xl mx-auto">
+    <div className="h-auto min-h-full w-full p-4">
+      {/* main conten area */}
+      <div className="max-w-[1480px] mx-auto">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
-          <div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-theme-textPrimary mb-2">
-              My Share Availabilities
-            </h1>
-            <p className="text-theme-textSecondary">
-              Manage and track your posted share availabilities and received offers
-            </p>
-          </div>
-          <div className="flex items-center gap-3 mt-4 sm:mt-0">
-            <button
-              onClick={handleOpenPostModal}
-              className="flex items-center gap-2 px-4 py-3 bg-primary hover:bg-primary/90 text-white rounded-lg transition-colors font-medium"
-            >
-              <FaPlus className="w-4 h-4" />
-              <span>Post Availability</span>
-            </button>
-          </div>
+        <div className="mb-6">
+          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
+            Shares Availability
+          </h1>
+          <p className="text-green-200">
+            Manage and track your posted share availabilities and received offers
+          </p>
+        </div>
+
+        {/* Posts Activity Section */}
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-xl font-semibold text-white">Posts Activity</h2>
+          <button
+            onClick={handleOpenPostModal}
+            className="flex items-center gap-2 px-4 py-2 bg-primary hover:bg-primary/90 text-white rounded-lg transition-colors font-medium"
+          >
+            <FaPlus className="w-4 h-4" />
+            <span>Create Post</span>
+          </button>
         </div>
 
         {/* Quick Stats */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-          <div className="bg-theme-accentLight/5 rounded-xl p-4 border border-theme-borderPrimary">
+          <div className="bg-green-800/50 rounded-xl p-4 border border-green-700">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
                 <FaChartBar className="w-5 h-5 text-primary" />
               </div>
               <div>
-                <p className="text-2xl font-bold text-theme-textPrimary">{totalCount}</p>
-                <p className="text-sm text-theme-textSecondary">Total Posts</p>
+                <p className="text-2xl font-bold text-white">{totalCount}</p>
+                <p className="text-sm text-green-200">Total Posts</p>
               </div>
             </div>
           </div>
 
-          <div className="bg-theme-accentLight/5 rounded-xl p-4 border border-theme-borderPrimary">
+          <div className="bg-green-800/50 rounded-xl p-4 border border-green-700">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-green-400/10 rounded-lg flex items-center justify-center">
                 <FaClock className="w-5 h-5 text-green-400" />
               </div>
               <div>
-                <p className="text-2xl font-bold text-theme-textPrimary">{activeCount}</p>
-                <p className="text-sm text-theme-textSecondary">Active Posts</p>
+                <p className="text-2xl font-bold text-white">{activeCount}</p>
+                <p className="text-sm text-green-200">Active Posts</p>
               </div>
             </div>
           </div>
 
-          <div className="bg-theme-accentLight/5 rounded-xl p-4 border border-theme-borderPrimary">
+          <div className="bg-green-800/50 rounded-xl p-4 border border-green-700">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-blue-400/10 rounded-lg flex items-center justify-center">
                 <FaHandshake className="w-5 h-5 text-blue-400" />
               </div>
               <div>
-                <p className="text-2xl font-bold text-theme-textPrimary">{soldCount}</p>
-                <p className="text-sm text-theme-textSecondary">Sold</p>
+                <p className="text-2xl font-bold text-white">{soldCount}</p>
+                <p className="text-sm text-green-200">Sold</p>
               </div>
             </div>
           </div>
 
-          <div className="bg-theme-accentLight/5 rounded-xl p-4 border border-theme-borderPrimary">
+          <div className="bg-green-800/50 rounded-xl p-4 border border-green-700">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-accent-green/10 rounded-lg flex items-center justify-center">
                 <FaEye className="w-5 h-5 text-accent-green" />
               </div>
               <div>
-                <p className="text-2xl font-bold text-theme-textPrimary">{totalViews}</p>
-                <p className="text-sm text-theme-textSecondary">Total Views</p>
+                <p className="text-2xl font-bold text-white">{totalViews}</p>
+                <p className="text-sm text-green-200">Total Views</p>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Filters */}
-        <AvailabilityFilter
-          onOpenFilterModal={handleOpenFilterModal}
-          searchTerm={searchTerm}
-          onSearchChange={setSearchTerm}
-          activeFiltersCount={activeFiltersCount}
-        />
+     
 
-        {/* Results Summary */}
-        <div className="flex items-center justify-between mb-6">
-          <div className="text-sm text-theme-textSecondary">
-            {filteredCount === totalCount ? (
-              <>Showing all {totalCount} availabilities</>
-            ) : (
-              <>Showing {filteredCount} of {totalCount} availabilities</>
-            )}
-          </div>
-        </div>
-
+      
         {/* Availabilities Grid */}
         {isLoading ? (
           <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">

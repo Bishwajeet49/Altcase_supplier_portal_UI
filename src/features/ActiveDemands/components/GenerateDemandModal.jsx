@@ -219,43 +219,7 @@ const GenerateDemandModal = ({ isOpen, onClose, onSubmitSuccess }) => {
                  </div>
                </div>
 
-                             {/* Preferred Delivery Method */}
-               <div>
-                 <label className="block text-sm font-medium text-theme-textPrimary mb-2">
-                   Preferred Delivery Method
-                 </label>
-                 <div className="grid grid-cols-2 gap-3">
-                   <label className="flex items-center p-3 bg-theme-bgSecondary border border-theme-borderSecondary rounded-lg cursor-pointer hover:border-primary/50 transition-colors">
-                     <input
-                       type="radio"
-                       name="deliveryMethod"
-                       value="demat"
-                       checked={formData.deliveryMethod === 'demat'}
-                       onChange={handleInputChange}
-                       className="sr-only"
-                     />
-                     <div className={`w-4 h-4 rounded-full border-2 mr-3 ${formData.deliveryMethod === 'demat' ? 'border-primary bg-primary' : 'border-theme-borderSecondary'}`}>
-                       {formData.deliveryMethod === 'demat' && <div className="w-2 h-2 bg-white rounded-full m-0.5"></div>}
-                     </div>
-                     <span className="text-sm text-theme-textPrimary">Demat Form</span>
-                   </label>
-                   <label className="flex items-center p-3 bg-theme-bgSecondary border border-theme-borderSecondary rounded-lg cursor-pointer hover:border-primary/50 transition-colors">
-                     <input
-                       type="radio"
-                       name="deliveryMethod"
-                       value="physical"
-                       checked={formData.deliveryMethod === 'physical'}
-                       onChange={handleInputChange}
-                       className="sr-only"
-                     />
-                     <div className={`w-4 h-4 rounded-full border-2 mr-3 ${formData.deliveryMethod === 'physical' ? 'border-primary bg-primary' : 'border-theme-borderSecondary'}`}>
-                       {formData.deliveryMethod === 'physical' && <div className="w-2 h-2 bg-white rounded-full m-0.5"></div>}
-                     </div>
-                     <span className="text-sm text-theme-textPrimary">Physical Form</span>
-                   </label>
-                 </div>
-               </div>
-
+          
                              {/* Description */}
                <div>
                  <label className="block text-sm font-medium text-theme-textPrimary mb-2">

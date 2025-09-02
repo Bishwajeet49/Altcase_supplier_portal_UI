@@ -4,7 +4,6 @@ import { FaTimes, FaBuilding, FaRupeeSign, FaCalendarAlt } from 'react-icons/fa'
 const PostAvailabilityModal = ({ isOpen, onClose, onSubmitSuccess, editingAvailability = null }) => {
   const [formData, setFormData] = useState({
     companyName: '',
-    shareType: '',
     sector: '',
     quantity: '',
     pricePerShare: '',
@@ -20,7 +19,6 @@ const PostAvailabilityModal = ({ isOpen, onClose, onSubmitSuccess, editingAvaila
     if (editingAvailability) {
       setFormData({
         companyName: editingAvailability.companyName,
-        shareType: editingAvailability.shareType,
         sector: editingAvailability.sector,
         quantity: editingAvailability.quantity.toString(),
         pricePerShare: editingAvailability.pricePerShare.toString(),
@@ -33,7 +31,6 @@ const PostAvailabilityModal = ({ isOpen, onClose, onSubmitSuccess, editingAvaila
       // Reset form for new availability
       setFormData({
         companyName: '',
-        shareType: '',
         sector: '',
         quantity: '',
         pricePerShare: '',
@@ -75,7 +72,6 @@ const PostAvailabilityModal = ({ isOpen, onClose, onSubmitSuccess, editingAvaila
       // Reset form
       setFormData({
         companyName: '',
-        shareType: '',
         sector: '',
         quantity: '',
         pricePerShare: '',
@@ -128,39 +124,19 @@ const PostAvailabilityModal = ({ isOpen, onClose, onSubmitSuccess, editingAvaila
           <form onSubmit={handleSubmit} className="p-6">
             <div className="space-y-6">
               {/* Company Information */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-theme-textPrimary mb-2">
-                    Company Name *
-                  </label>
-                  <input
-                    type="text"
-                    name="companyName"
-                    value={formData.companyName}
-                    onChange={handleInputChange}
-                    placeholder="Enter company name"
-                    className="w-full px-4 py-3 bg-theme-bgSecondary border border-theme-borderSecondary rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-theme-textPrimary placeholder:text-theme-textMuted"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-theme-textPrimary mb-2">
-                    Share Type *
-                  </label>
-                  <select
-                    name="shareType"
-                    value={formData.shareType}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 bg-theme-bgSecondary border border-theme-borderSecondary rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-theme-textPrimary"
-                    required
-                  >
-                    <option value="">Select share type</option>
-                    <option value="Equity">Equity</option>
-                    <option value="Preference">Preference</option>
-                    <option value="Debenture">Debenture</option>
-                    <option value="Warrant">Warrant</option>
-                  </select>
-                </div>
+              <div>
+                <label className="block text-sm font-medium text-theme-textPrimary mb-2">
+                  Company Name *
+                </label>
+                <input
+                  type="text"
+                  name="companyName"
+                  value={formData.companyName}
+                  onChange={handleInputChange}
+                  placeholder="Enter company name"
+                  className="w-full px-4 py-3 bg-theme-bgSecondary border border-theme-borderSecondary rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-theme-textPrimary placeholder:text-theme-textMuted"
+                  required
+                />
               </div>
 
               {/* Sector */}
@@ -265,42 +241,7 @@ const PostAvailabilityModal = ({ isOpen, onClose, onSubmitSuccess, editingAvaila
                 </div>
               </div>
 
-              {/* Delivery Method */}
-              <div>
-                <label className="block text-sm font-medium text-theme-textPrimary mb-2">
-                  Delivery Method
-                </label>
-                <div className="grid grid-cols-2 gap-3">
-                  <label className="flex items-center p-3 bg-theme-bgSecondary border border-theme-borderSecondary rounded-lg cursor-pointer hover:border-primary/50 transition-colors">
-                    <input
-                      type="radio"
-                      name="deliveryMethod"
-                      value="demat"
-                      checked={formData.deliveryMethod === 'demat'}
-                      onChange={handleInputChange}
-                      className="sr-only"
-                    />
-                    <div className={`w-4 h-4 rounded-full border-2 mr-3 ${formData.deliveryMethod === 'demat' ? 'border-primary bg-primary' : 'border-theme-borderSecondary'}`}>
-                      {formData.deliveryMethod === 'demat' && <div className="w-2 h-2 bg-white rounded-full m-0.5"></div>}
-                    </div>
-                    <span className="text-sm text-theme-textPrimary">Demat Form</span>
-                  </label>
-                  <label className="flex items-center p-3 bg-theme-bgSecondary border border-theme-borderSecondary rounded-lg cursor-pointer hover:border-primary/50 transition-colors">
-                    <input
-                      type="radio"
-                      name="deliveryMethod"
-                      value="physical"
-                      checked={formData.deliveryMethod === 'physical'}
-                      onChange={handleInputChange}
-                      className="sr-only"
-                    />
-                    <div className={`w-4 h-4 rounded-full border-2 mr-3 ${formData.deliveryMethod === 'physical' ? 'border-primary bg-primary' : 'border-theme-borderSecondary'}`}>
-                      {formData.deliveryMethod === 'physical' && <div className="w-2 h-2 bg-white rounded-full m-0.5"></div>}
-                    </div>
-                    <span className="text-sm text-theme-textPrimary">Physical Form</span>
-                  </label>
-                </div>
-              </div>
+          
 
               {/* Description */}
               <div>

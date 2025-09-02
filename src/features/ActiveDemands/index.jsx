@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { FaPlus, FaChartBar, FaClock, FaExclamationTriangle } from 'react-icons/fa';
-import { DemandCard, SubmitQuoteModal, DemandsFilter, FilterModal, GenerateDemandModal } from './components';
+import { DemandsFilter, FilterModal, GenerateDemandModal } from './components';
+import SubmitQuoteModal from '../../components/ui/SubmitQuoteModal';
+import DemandCard from '../../components/ui/DemandCard';
 import { useActiveDemands } from './hooks/useActiveDemands';
+import activeDemandsService from './activeDemands.service';
 
 const ActiveDemands = () => {
   const {
@@ -98,8 +101,9 @@ const ActiveDemands = () => {
   }
 
   return (
-    <div className="h-auto min-h-full w-full bg-theme-bgPrimary p-4">
-      <div className="max-w-7xl mx-auto">
+    <div className="h-auto min-h-full w-full  p-4">
+      {/* main content container */}
+      <div className="max-w-[1480px] mx-auto">
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
           <div>
@@ -122,7 +126,7 @@ const ActiveDemands = () => {
         </div>
 
         {/* Quick Stats */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
           <div className="bg-theme-accentLight/5 rounded-xl p-4 border border-theme-borderPrimary">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
@@ -180,16 +184,8 @@ const ActiveDemands = () => {
           activeFiltersCount={activeFiltersCount}
         />
 
-        {/* Results Summary */}
-        <div className="flex items-center justify-between mb-6">
-          <div className="text-sm text-theme-textSecondary">
-            {filteredCount === totalCount ? (
-              <>Showing all {totalCount} demands</>
-            ) : (
-              <>Showing {filteredCount} of {totalCount} demands</>
-            )}
-          </div>
-        </div>
+
+      
 
         {/* Demands Grid */}
         {isLoading ? (
@@ -284,7 +280,10 @@ const ActiveDemands = () => {
               <DemandCard
                 key={demand.id}
                 demand={demand}
-                onSubmitQuote={handleSubmitQuote}
+                onQuoteNow={handleSubmitQuote}
+                showQuoteButton={true}
+                buttonText="Submit Quote"
+                buttonVariant="primary"
               />
             ))}
           </div>
@@ -295,6 +294,7 @@ const ActiveDemands = () => {
           isOpen={isQuoteModalOpen}
           onClose={handleCloseQuoteModal}
           demand={selectedDemand}
+          onSubmitSuccess={activeDemandsService.submitQuote}
         />
 
         {/* Filter Modal */}

@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaCalendarAlt, FaClock, FaCheckCircle, FaTimesCircle, FaCalendarCheck, FaHistory } from 'react-icons/fa';
 
-const StatsCard = ({ type, title, value, description, isLoading = false }) => {
+const StatsCard = ({ type, title, value, description, isLoading = false, screenSize = 'xl' }) => {
   // Define icon styles based on type
   const getIconStyles = () => {
     const baseStyles = "w-16 h-16 rounded-xl flex items-center justify-center";
@@ -102,24 +102,97 @@ const StatsCard = ({ type, title, value, description, isLoading = false }) => {
     );
   }
 
-  return (
-    <div className={`h-32 rounded-xl p-6 border ${getCardBackground()} flex items-center justify-between`}>
-      <div className="flex items-center gap-4">
-        <div className={getIconStyles()}>
-          {getIcon()}
-        </div>
-        <div>
-          <h3 className="text-xl font-semibold text-theme-textPrimary">
-            {title}
-          </h3>
-        </div>
-      </div>
-      
-      <div className={getValueStyles()}>
-        {value}
-      </div>
-    </div>
-  );
+  // Get responsive card layout based on screen size
+  const getCardLayout = () => {
+    switch (screenSize) {
+      case 'xl': // 1280px+: Horizontal layout (current)
+        return (
+          <div className={`h-32 rounded-xl p-6 border ${getCardBackground()} flex items-center justify-between`}>
+            <div className="flex items-center gap-4">
+              <div className={`${getIconStyles()} flex items-center justify-center`}>
+                <div className="flex items-center justify-center">
+                  {getIcon()}
+                </div>
+              </div>
+              <div>
+                <h3 className="text-xl font-semibold text-theme-textPrimary">
+                  {title}
+                </h3>
+              </div>
+            </div>
+            
+            <div className={getValueStyles()}>
+              {value}
+            </div>
+          </div>
+        );
+
+      case 'lg': // 1024px-1279px: Vertical layout for better space utilization
+        return (
+          <div className={`h-32 rounded-xl p-4 border ${getCardBackground()} flex flex-col justify-center`}>
+            {/* Icon and Value Row */}
+            <div className="flex items-center justify-between mb-2">
+              <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-primary/10">
+                <div className="w-5 h-5 text-primary flex items-center justify-center">
+                  {getIcon()}
+                </div>
+              </div>
+              <div className="text-2xl font-bold text-theme-textPrimary">
+                {value}
+              </div>
+            </div>
+            {/* Title Row */}
+            <div>
+              <h3 className="text-sm font-semibold text-theme-textPrimary leading-tight">
+                {title}
+              </h3>
+            </div>
+          </div>
+        );
+
+      case 'md': // 768px-1023px: Horizontal layout (same as xl but smaller)
+        return (
+          <div className={`h-28 rounded-xl p-4 border ${getCardBackground()} flex items-center justify-between`}>
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-lg flex items-center justify-center bg-primary/10">
+                <div className="w-6 h-6 text-primary flex items-center justify-center">
+                  {getIcon()}
+                </div>
+              </div>
+              <div>
+                <h3 className="text-base font-semibold text-theme-textPrimary">
+                  {title}
+                </h3>
+              </div>
+            </div>
+            
+            <div className="text-xl font-bold text-theme-textPrimary">
+              {value}
+            </div>
+          </div>
+        );
+
+      default: // <768px: Clean layout without icon for mobile
+        return (
+          <div className={`h-24 rounded-xl p-4 border ${getCardBackground()} flex flex-col justify-center`}>
+            {/* Value Row */}
+            <div className="text-center mb-3">
+              <div className="text-2xl font-bold text-theme-textPrimary">
+                {value}
+              </div>
+            </div>
+            {/* Title Row */}
+            <div className="text-center">
+              <h3 className="text-sm font-semibold text-theme-textPrimary leading-tight">
+                {title}
+              </h3>
+            </div>
+          </div>
+        );
+    }
+  };
+
+  return getCardLayout();
 };
 
 export default StatsCard; 
