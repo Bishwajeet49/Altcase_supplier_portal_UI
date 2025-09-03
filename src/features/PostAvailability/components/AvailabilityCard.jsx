@@ -122,7 +122,7 @@ const AvailabilityCard = ({ availability, onUpdateStatus, onDelete, onEdit, onVi
             <FaCalendarAlt className="w-4 h-4 text-green-300" />
             <span className="text-sm font-medium">Posted on</span>
           </div>
-          <span className="text-sm text-green-200">{formatDate(postedAt)}</span>
+          <span className="text-sm text-theme-textSecondary">{formatDate(postedAt)}</span>
         </div>
 
         {/* Validity */}
@@ -131,7 +131,7 @@ const AvailabilityCard = ({ availability, onUpdateStatus, onDelete, onEdit, onVi
             <FaClock className="w-4 h-4 text-green-300" />
             <span className="text-sm font-medium">Valid until</span>
           </div>
-          <span className="text-sm text-green-200">{formatDate(validity)}</span>
+          <span className="text-sm text-theme-textSecondary">{formatDate(validity)}</span>
         </div>
       </div>
 
