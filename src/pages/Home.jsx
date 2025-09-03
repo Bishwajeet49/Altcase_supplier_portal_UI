@@ -2,10 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../components/ui/Button';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
+import { useNavigate } from 'react-router-dom';
 
 function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const navigate = useNavigate();
+  useEffect(() => {
+navigate('/dashboard');
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,7 +34,7 @@ function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
-            <div className="flex-shrink-0">
+            {/* <div className="flex-shrink-0">
               <Link to="/" className="flex items-center">
                 <img 
                   src="/full-logo.png" 
@@ -37,7 +42,7 @@ function Home() {
                   className="h-8 w-auto"
                 />
               </Link>
-            </div>
+            </div> */}
 
             {/* Desktop Navigation */}
             <div className="hidden md:block">
@@ -371,11 +376,11 @@ function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between flex-wrap gap-8">
             <div>
-              <img 
+              {/* <img 
                 src="/full-logo.png" 
                 alt="Fitizen Organizer" 
                 className="h-8 w-auto mb-4"
-              />
+              /> */}
               <p className="text-dark-300 mb-4 max-w-md">
                 The ultimate platform for event organizers to create, manage, and track successful events with powerful analytics and seamless participant registration.
               </p>

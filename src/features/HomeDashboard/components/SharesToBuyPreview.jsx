@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { FaShoppingCart, FaBuilding, FaRupeeSign, FaStar, FaShieldAlt, FaArrowRight, FaTag } from 'react-icons/fa';
 import sharesToBuyService from '../../SharesToBuy/sharesToBuy.service';
 import ShareCard from '../../../components/ui/ShareCard';
+import PurchaseModal from '../../../components/ui/PurchaseModal';
 
 // Hook to get screen size and determine card count
 const useResponsiveCards = () => {
@@ -38,6 +39,8 @@ const useResponsiveCards = () => {
 const SharesToBuyPreview = () => {
   const [shares, setShares] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isPurchaseModalOpen, setIsPurchaseModalOpen] = useState(false);
+  const [selectedShare, setSelectedShare] = useState(null);
   const navigate = useNavigate();
   const { screenSize, cardCount } = useResponsiveCards();
 
@@ -64,11 +67,13 @@ const SharesToBuyPreview = () => {
             pricePerShare: 2520,
             originalPrice: 2400,
             minQuantity: 100,
+            maxQuantity: 800,
             supplierName: 'Premium Shares Ltd.',
             supplierRating: 4.8,
             listedAt: '2024-07-21T12:00:00Z',
             tags: ['blue-chip', 'dividend-paying'],
-            compliance: { regulatoryApproved: true }
+            compliance: { regulatoryApproved: true },
+            deliveryMethod: 'demat'
           },
           {
             id: 'as2',
@@ -79,11 +84,13 @@ const SharesToBuyPreview = () => {
             pricePerShare: 3900,
             originalPrice: 3750,
             minQuantity: 50,
+            maxQuantity: 500,
             supplierName: 'Tech Equity Partners',
             supplierRating: 4.9,
             listedAt: '2024-07-19T11:00:00Z',
             tags: ['tech-stock', 'growth'],
-            compliance: { regulatoryApproved: true }
+            compliance: { regulatoryApproved: true },
+            deliveryMethod: 'demat'
           },
           {
             id: 'as3',
@@ -94,11 +101,13 @@ const SharesToBuyPreview = () => {
             pricePerShare: 1680,
             originalPrice: 1580,
             minQuantity: 25,
+            maxQuantity: 250,
             supplierName: 'Banking Securities Co.',
             supplierRating: 4.6,
             listedAt: '2024-07-16T16:00:00Z',
             tags: ['banking', 'large-cap'],
-            compliance: { regulatoryApproved: true }
+            compliance: { regulatoryApproved: true },
+            deliveryMethod: 'demat'
           },
           {
             id: 'as4',
@@ -109,11 +118,13 @@ const SharesToBuyPreview = () => {
             pricePerShare: 1850,
             originalPrice: 1750,
             minQuantity: 75,
+            maxQuantity: 600,
             supplierName: 'Tech Equity Partners',
             supplierRating: 4.7,
             listedAt: '2024-07-23T10:00:00Z',
             tags: ['tech-stock', 'growth'],
-            compliance: { regulatoryApproved: true }
+            compliance: { regulatoryApproved: true },
+            deliveryMethod: 'demat'
           }
         ];
         setShares(dummyData.slice(0, cardCount));
@@ -146,8 +157,21 @@ const SharesToBuyPreview = () => {
     navigate('/shares-to-buy');
   };
 
-  const handleBuyNow = (shareId) => {
-    navigate('/shares-to-buy', { state: { openPurchaseModal: shareId } });
+  const handleBuyNow = (share) => {
+    setSelectedShare(share);
+    setIsPurchaseModalOpen(true);
+  };
+
+  const handleClosePurchaseModal = () => {
+    setIsPurchaseModalOpen(false);
+    setSelectedShare(null);
+  };
+
+  const handlePurchaseSuccess = (result) => {
+    setIsPurchaseModalOpen(false);
+    setSelectedShare(null);
+    // You could show a success toast here
+    console.log('Purchase successful:', result);
   };
 
   // Get responsive grid classes based on screen size
@@ -244,6 +268,14 @@ const SharesToBuyPreview = () => {
           <p className="text-theme-textSecondary text-lg">No shares available for purchase</p>
         </div>
       )}
+
+      {/* Purchase Modal */}
+      <PurchaseModal
+        isOpen={isPurchaseModalOpen}
+        onClose={handleClosePurchaseModal}
+        onPurchaseSuccess={handlePurchaseSuccess}
+        share={selectedShare}
+      />
     </div>
   );
 };

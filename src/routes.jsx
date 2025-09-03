@@ -17,6 +17,7 @@ import ActiveDemands from './pages/ActiveDemands.jsx'
 import MyQuotes from './pages/MyQuotes.jsx'
 import PostAvailability from './pages/PostAvailability.jsx'
 import SharesToBuy from './pages/SharesToBuy.jsx'
+import Notifications from './pages/Notifications.jsx'
 
 export default function Router() {
   return (
@@ -25,7 +26,7 @@ export default function Router() {
 
 
             {/* this group will contain the routes relted to onboarding and sigin-in */}
-            <Route path='auth' element={<AuthLayout />}>
+            {/* <Route path='auth' element={<AuthLayout />}> */}
 
                 <Route
                   path='sign-in'
@@ -41,7 +42,7 @@ export default function Router() {
                     element={<ForgotPassword />}
                   /> */}
 
-            </Route>
+            {/* </Route> */}
 
             {/* this will contain all the protacted routes related to the dashboard  */}
             <Route element={
@@ -55,6 +56,7 @@ export default function Router() {
               <Route path='my-quotes' element={<MyQuotes />} />
               <Route path='availability' element={<PostAvailability />} />
               <Route path='shares-to-buy' element={<SharesToBuy />} />
+              <Route path='notifications' element={<Notifications />} />
               {/* <Route path='participants' element={<Participants />} /> */}
               <Route path='profile' element={<Profile />} />
 

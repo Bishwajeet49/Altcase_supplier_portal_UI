@@ -120,3 +120,4 @@ const QuoteCard = ({
 };
 
 export default QuoteCard;
+

@@ -5,10 +5,8 @@ const PurchaseModal = ({ isOpen, onClose, onPurchaseSuccess, share }) => {
   const [formData, setFormData] = useState({
     quantity: '',
     totalAmount: 0,
-    deliveryAddress: '',
     contactNumber: '',
     email: '',
-    paymentMethod: 'bank_transfer',
     agreedToTerms: false
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -54,10 +52,8 @@ const PurchaseModal = ({ isOpen, onClose, onPurchaseSuccess, share }) => {
         quantity: parseInt(formData.quantity),
         pricePerShare: share.pricePerShare,
         totalAmount: formData.totalAmount,
-        deliveryAddress: formData.deliveryAddress,
         contactNumber: formData.contactNumber,
-        email: formData.email,
-        paymentMethod: formData.paymentMethod
+        email: formData.email
       };
 
       console.log('Submitting purchase:', purchaseData);
@@ -69,10 +65,8 @@ const PurchaseModal = ({ isOpen, onClose, onPurchaseSuccess, share }) => {
       setFormData({
         quantity: '',
         totalAmount: 0,
-        deliveryAddress: '',
         contactNumber: '',
         email: '',
-        paymentMethod: 'bank_transfer',
         agreedToTerms: false
       });
       
@@ -242,59 +236,6 @@ const PurchaseModal = ({ isOpen, onClose, onPurchaseSuccess, share }) => {
                     className="w-full px-4 py-3 bg-theme-bgSecondary border border-theme-borderSecondary rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-theme-textPrimary placeholder:text-theme-textMuted"
                     required
                   />
-                </div>
-              </div>
-
-              {/* Delivery Address */}
-              <div>
-                <label className="block text-sm font-medium text-theme-textPrimary mb-2">
-                  Delivery Address {share.deliveryMethod === 'physical' ? '*' : '(Optional)'}
-                </label>
-                <textarea
-                  name="deliveryAddress"
-                  value={formData.deliveryAddress}
-                  onChange={handleInputChange}
-                  placeholder={share.deliveryMethod === 'physical' ? 'Enter delivery address for physical certificates' : 'Enter address for correspondence'}
-                  rows="3"
-                  className="w-full px-4 py-3 bg-theme-bgSecondary border border-theme-borderSecondary rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-theme-textPrimary placeholder:text-theme-textMuted resize-none"
-                  required={share.deliveryMethod === 'physical'}
-                />
-              </div>
-
-              {/* Payment Method */}
-              <div>
-                <label className="block text-sm font-medium text-theme-textPrimary mb-2">
-                  Payment Method
-                </label>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                  <label className="flex items-center p-3 bg-theme-bgSecondary border border-theme-borderSecondary rounded-lg cursor-pointer hover:border-primary/50 transition-colors">
-                    <input
-                      type="radio"
-                      name="paymentMethod"
-                      value="bank_transfer"
-                      checked={formData.paymentMethod === 'bank_transfer'}
-                      onChange={handleInputChange}
-                      className="sr-only"
-                    />
-                    <div className={`w-4 h-4 rounded-full border-2 mr-3 ${formData.paymentMethod === 'bank_transfer' ? 'border-primary bg-primary' : 'border-theme-borderSecondary'}`}>
-                      {formData.paymentMethod === 'bank_transfer' && <div className="w-2 h-2 bg-white rounded-full m-0.5"></div>}
-                    </div>
-                    <span className="text-sm text-theme-textPrimary">Bank Transfer</span>
-                  </label>
-                  <label className="flex items-center p-3 bg-theme-bgSecondary border border-theme-borderSecondary rounded-lg cursor-pointer hover:border-primary/50 transition-colors">
-                    <input
-                      type="radio"
-                      name="paymentMethod"
-                      value="upi"
-                      checked={formData.paymentMethod === 'upi'}
-                      onChange={handleInputChange}
-                      className="sr-only"
-                    />
-                    <div className={`w-4 h-4 rounded-full border-2 mr-3 ${formData.paymentMethod === 'upi' ? 'border-primary bg-primary' : 'border-theme-borderSecondary'}`}>
-                      {formData.paymentMethod === 'upi' && <div className="w-2 h-2 bg-white rounded-full m-0.5"></div>}
-                    </div>
-                    <span className="text-sm text-theme-textPrimary">UPI Payment</span>
-                  </label>
                 </div>
               </div>
 

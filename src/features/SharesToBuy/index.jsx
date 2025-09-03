@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { FaShoppingCart, FaChartBar, FaEye, FaUsers, FaRocket } from 'react-icons/fa';
 import { 
-  PurchaseModal, 
   SharesFilter, 
   SharesFilterModal,
   ExpressInterestModal 
 } from './components';
+import PurchaseModal from '../../components/ui/PurchaseModal';
 import ShareCard from '../../components/ui/ShareCard';
 import { useSharesToBuy } from './hooks/useSharesToBuy';
 
@@ -309,7 +309,7 @@ export default function SharesToBuyFeature() {
                 share={share}
                 onBuyNow={handlePurchase}
                 showBuyButton={true}
-                buyButtonText="Purchase"
+                buyButtonText="Buy Now"
                 buttonVariant="primary"
               />
             ))}

@@ -11,7 +11,7 @@ const ShareCard = ({
 }) => {
   const handleBuyClick = () => {
     if (onBuyNow) {
-      onBuyNow(share.id);
+      onBuyNow(share);
     }
   };
 

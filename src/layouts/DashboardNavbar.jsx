@@ -190,7 +190,10 @@ export default function DashboardNavbar({ showMiniSidebar, setShowMiniSidebar })
                             </button>
 
                             {/* Bell Icon */}
-                            <button className="xxsm:hidden relative p-2 text-theme-textSecondary hover:text-primary focus:outline-none transition-colors ml-1">
+                            <button 
+                                onClick={() => navigate('/notifications')}
+                                className="xxsm:hidden relative p-2 text-theme-textSecondary hover:text-primary focus:outline-none transition-colors ml-1"
+                            >
                                 <FiBell size={20} />
                                 <span className="absolute top-0 right-0 h-2 w-2 rounded-full bg-primary"></span>
                             </button>

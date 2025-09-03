@@ -25,7 +25,7 @@ export const sidebarItems = [
     path: "/demands",
   },
   {
-    label: "Statuses",
+    label: "Status",
     icon: FiMessageSquare,
     path: "/my-quotes",
   },

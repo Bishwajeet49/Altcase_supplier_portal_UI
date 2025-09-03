@@ -47,7 +47,9 @@ function ProtectedRoute({ children }) {
 
   // Redirect to login if not authenticated
   if (!isAuthenticated) {
-    return <Navigate to="/auth/sign-in" state={{ from: location }} replace />;
+    // return <Navigate to="/auth/sign-in" state={{ from: location }} replace />;
+    //bypass the auth route temporarily
+    return children;
   }
 
   // Render children if authenticated
