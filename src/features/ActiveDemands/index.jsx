@@ -212,19 +212,19 @@ const ActiveDemands = () => {
                   </div>
                 </div>
 
-                {/* Key Metrics Grid Skeleton */}
-                <div className="grid grid-cols-2 gap-3 mb-5">
-                  {[...Array(4)].map((_, i) => (
-                    <div key={i} className="bg-theme-bgSecondary/50 rounded-xl p-3 border border-theme-borderSecondary/50 h-20 flex flex-col justify-center">
-                      <div className="h-3 bg-theme-borderSecondary rounded mb-1 w-16"></div>
-                      <div className="h-4 bg-theme-borderSecondary rounded mb-1 w-20"></div>
-                      <div className="h-3 bg-theme-borderSecondary rounded w-12"></div>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Content Area Skeleton */}
+                {/* Content Area Skeleton - This will grow to fill available space */}
                 <div className="flex-1 flex flex-col">
+                  {/* Key Metrics Grid Skeleton */}
+                  <div className="grid grid-cols-2 gap-3 mb-5">
+                    {[...Array(4)].map((_, i) => (
+                      <div key={i} className="bg-theme-bgSecondary/50 rounded-xl p-3 border border-theme-borderSecondary/50 h-20 flex flex-col justify-center">
+                        <div className="h-3 bg-theme-borderSecondary rounded mb-1 w-16"></div>
+                        <div className="h-4 bg-theme-borderSecondary rounded mb-1 w-20"></div>
+                        <div className="h-3 bg-theme-borderSecondary rounded w-12"></div>
+                      </div>
+                    ))}
+                  </div>
+
                   {/* Description */}
                   <div className="mb-4">
                     <div className="h-4 bg-theme-bgSecondary rounded mb-2 w-full"></div>
@@ -232,7 +232,7 @@ const ActiveDemands = () => {
                   </div>
                 </div>
 
-                {/* Footer Skeleton */}
+                {/* Footer Skeleton - Always at the bottom */}
                 <div className="pt-4 border-t border-theme-borderSecondary/50 mt-auto">
                   <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mb-3">
                     <div className="h-3 bg-theme-bgSecondary rounded w-20"></div>

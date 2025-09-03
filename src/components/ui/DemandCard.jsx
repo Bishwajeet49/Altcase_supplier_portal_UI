@@ -89,7 +89,7 @@ const DemandCard = ({
 
   return (
     <div
-      className={`bg-theme-cardBg rounded-xl p-6 border border-theme-borderSecondary/50 hover:border-primary/30 transition-all duration-300 hover:shadow-lg ${className}`}
+      className={`bg-theme-cardBg rounded-xl p-6 border border-theme-borderSecondary/50 hover:border-primary/30 transition-all duration-300 hover:shadow-lg flex flex-col h-full ${className}`}
       onClick={onClick}
     >
       {/* Company Header */}
@@ -107,58 +107,58 @@ const DemandCard = ({
             </span>
           </div>
         </div>
-        <span className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium border ${getStatusColor(demand.status)}`}>
-          {getStatusIcon(demand.status)}
-          {demand.status?.charAt(0).toUpperCase() + demand.status?.slice(1)}
-        </span>
+      
       </div>
 
-      {/* Key Information */}
-      <div className="space-y-3 mb-4">
-        <div className="flex justify-between items-center">
-          <span className="text-[1rem] text-theme-textSecondary">Quantity</span>
-          <span className="text-[1.1rem] font-medium text-theme-textPrimary">
-            {demand.quantity?.toLocaleString() || 'N/A'}
-          </span>
+      {/* Content Area - This will grow to fill available space */}
+      <div className="flex-1 flex flex-col">
+        {/* Key Information */}
+        <div className="space-y-3 mb-4">
+          <div className="flex justify-between items-center">
+            <span className="text-[1rem] text-theme-textSecondary">Quantity</span>
+            <span className="text-[1.1rem] font-medium text-theme-textPrimary">
+              {demand.quantity?.toLocaleString() || 'N/A'}
+            </span>
+          </div>
+          <div className="flex justify-between items-center">
+            <span className="text-[1rem] text-theme-textSecondary">Expected Price</span>
+            <span className="text-[1.1rem] font-medium text-primary">
+              ₹{demand.expectedPrice?.toLocaleString() || 'N/A'}
+            </span>
+          </div>
+          <div className="flex justify-between items-center">
+            <span className="text-[1rem] text-theme-textSecondary">TAT</span>
+            <span className="text-[1.1rem] font-medium text-theme-textPrimary">
+              {demand.expectedTat || 'N/A'}
+            </span>
+          </div>
         </div>
-        <div className="flex justify-between items-center">
-          <span className="text-[1rem] text-theme-textSecondary">Expected Price</span>
-          <span className="text-[1.1rem] font-medium text-primary">
-            ₹{demand.expectedPrice?.toLocaleString() || 'N/A'}
-          </span>
-        </div>
-        <div className="flex justify-between items-center">
-          <span className="text-[1rem] text-theme-textSecondary">TAT</span>
-          <span className="text-[1.1rem] font-medium text-theme-textPrimary">
-            {demand.expectedTat || 'N/A'}
-          </span>
-        </div>
+
+        {/* Offers Summary */}
+        {demand.offers && demand.offers.length > 0 && (
+          <div className="mb-4 p-3 bg-theme-bgSecondary rounded-lg">
+            <div className="flex justify-between items-center mb-2">
+              <span className="text-sm font-medium text-theme-textPrimary">Offers Received</span>
+              <span className="text-sm text-theme-textSecondary">{demand.offers.length}</span>
+            </div>
+            <div className="flex gap-2 text-xs">
+              {pendingOffers > 0 && (
+                <span className="px-2 py-1 bg-yellow-400/10 text-yellow-400 rounded-full">
+                  {pendingOffers} Pending
+                </span>
+              )}
+              {acceptedOffers > 0 && (
+                <span className="px-2 py-1 bg-green-400/10 text-green-400 rounded-full">
+                  {acceptedOffers} Accepted
+                </span>
+              )}
+            </div>
+          </div>
+        )}
       </div>
 
-      {/* Offers Summary */}
-      {demand.offers && demand.offers.length > 0 && (
-        <div className="mb-4 p-3 bg-theme-bgSecondary rounded-lg">
-          <div className="flex justify-between items-center mb-2">
-            <span className="text-sm font-medium text-theme-textPrimary">Offers Received</span>
-            <span className="text-sm text-theme-textSecondary">{demand.offers.length}</span>
-          </div>
-          <div className="flex gap-2 text-xs">
-            {pendingOffers > 0 && (
-              <span className="px-2 py-1 bg-yellow-400/10 text-yellow-400 rounded-full">
-                {pendingOffers} Pending
-              </span>
-            )}
-            {acceptedOffers > 0 && (
-              <span className="px-2 py-1 bg-green-400/10 text-green-400 rounded-full">
-                {acceptedOffers} Accepted
-              </span>
-            )}
-          </div>
-        </div>
-      )}
-
-      {/* Action Buttons */}
-      <div className="space-y-2">
+      {/* Action Buttons - Always at the bottom */}
+      <div className="space-y-2 mt-auto">
         {showQuoteButton && (
           <button
             onClick={handleQuoteClick}

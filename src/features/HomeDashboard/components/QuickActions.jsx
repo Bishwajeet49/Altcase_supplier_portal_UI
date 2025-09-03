@@ -35,30 +35,30 @@ const QuickActions = () => {
     {
       title: 'View Demands',
       description: 'Browse active demands',
-      path: '/active-demands',
+      path: '/demands',
       icon: FaCalendarAlt,
       color: 'primary'
     },
     {
-      title: 'Submit Quote',
-      description: 'Quote on demands',
-      path: '/submit-quote',
-      icon: FaPlus,
-      color: 'accent-green'
-    },
-    {
       title: 'Post Availability',
       description: 'Sell your shares',
-      path: '/post-availability',
+      path: '/availability',
       icon: FaUsers,
       color: 'accent-blue'
     },
     {
       title: 'My Quotes',
       description: 'Track your quotes',
-      path: '/my-quotes',
+      path: '/my-quotes?tab=quotes',
       icon: FaChartBar,
       color: 'accent-purple'
+    },
+    {
+      title: 'My Demands',
+      description: 'Track your demands',
+      path: '/my-quotes?tab=demands',
+      icon: FaPlus,
+      color: 'accent-green'
     }
   ];
 

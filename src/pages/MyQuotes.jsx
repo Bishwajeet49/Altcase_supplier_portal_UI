@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { FaFileAlt, FaChartLine, FaClock, FaCheckCircle, FaTimesCircle, FaEye, FaBuilding, FaRupeeSign, FaCalendarAlt, FaExclamationTriangle } from 'react-icons/fa';
 import toast from 'react-hot-toast';
 import QuoteCard from '../components/ui/QuoteCard';
@@ -8,7 +9,17 @@ import OffersModal from '../components/ui/OffersModal';
 import myQuotesService from '../services/myQuotesService';
 
 export default function MyQuotes() {
-  const [activeTab, setActiveTab] = useState('quotes'); // 'quotes' or 'demands'
+  const location = useLocation();
+  const navigate = useNavigate();
+  
+  // Get tab from URL parameters, default to 'quotes'
+  const getTabFromUrl = () => {
+    const urlParams = new URLSearchParams(location.search);
+    const tab = urlParams.get('tab');
+    return tab === 'demands' ? 'demands' : 'quotes';
+  };
+  
+  const [activeTab, setActiveTab] = useState(getTabFromUrl());
   const [quotes, setQuotes] = useState([]);
   const [demands, setDemands] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -32,6 +43,14 @@ export default function MyQuotes() {
   useEffect(() => {
     fetchData();
   }, []);
+
+  // Update active tab when URL changes
+  useEffect(() => {
+    const tabFromUrl = getTabFromUrl();
+    if (tabFromUrl !== activeTab) {
+      setActiveTab(tabFromUrl);
+    }
+  }, [location.search]);
 
   const fetchData = async () => {
     try {
@@ -93,6 +112,9 @@ export default function MyQuotes() {
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
+    // Update URL with the selected tab
+    const newUrl = tab === 'quotes' ? '/my-quotes' : `/my-quotes?tab=${tab}`;
+    navigate(newUrl, { replace: true });
   };
 
   const handleViewDetails = (item) => {
