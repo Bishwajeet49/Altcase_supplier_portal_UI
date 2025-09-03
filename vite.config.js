@@ -5,34 +5,31 @@ import path from 'path';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    
     react({
-    babel: {
-      plugins: [
-        // other Babel plugins
-        [
-          "@locator/babel-jsx/dist",
-          {
-            env: "development",
-          },
+      babel: {
+        plugins: [
+          [
+            "@locator/babel-jsx/dist",
+            {
+              env: "development",
+            },
+          ],
         ],
-      ],
-    },
-  }),
-
-  
-],
+      },
+    }),
+  ],
   server: {
     port: 3000,
-    open: true
+    open: true,
   },
   build: {
-    outDir: 'build',
-    sourcemap: true
+    outDir: 'build',   // 👈 matches what you set on Vercel
+    sourcemap: true,   // keeps source maps for debugging
+    emptyOutDir: true, // 👈 ensures old files are cleared before each build
   },
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src')
-    }
-  }
-}); 
+      '@': path.resolve(__dirname, './src'),
+    },
+  },
+});
