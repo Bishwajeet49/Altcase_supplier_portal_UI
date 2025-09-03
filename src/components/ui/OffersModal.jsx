@@ -187,9 +187,9 @@ const OffersModal = ({
         ></div>
 
         {/* Modal content */}
-        <div className="inline-block align-bottom bg-theme-cardBg rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-4xl sm:w-full">
+        <div className="bg-theme-cardBg rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-4xl sm:w-full sm:max-h-[90vh] flex flex-col mx-auto">
           {/* Header */}
-          <div className="flex items-center justify-between p-6 border-b border-theme-borderSecondary">
+          <div className="flex-shrink-0 flex items-center justify-between p-6 border-b border-theme-borderSecondary">
             <div>
               <h2 className="text-xl font-semibold text-theme-textPrimary">Offers for Demand</h2>
               <p className="text-sm text-theme-textSecondary mt-1">
@@ -205,7 +205,7 @@ const OffersModal = ({
           </div>
 
           {/* Body */}
-          <div className="p-6 max-h-96 overflow-y-auto">
+          <div className="flex-1 overflow-y-auto min-h-0 p-6">
             {/* Demand Summary */}
             <div className="bg-theme-bgSecondary rounded-lg p-4 mb-6">
               <h3 className="font-semibold text-theme-textPrimary mb-2">Demand Summary</h3>
@@ -283,7 +283,7 @@ const OffersModal = ({
           </div>
 
           {/* Footer */}
-          <div className="flex justify-end gap-3 p-6 border-t border-theme-borderSecondary">
+          <div className="flex-shrink-0 flex justify-end gap-3 p-6 border-t border-theme-borderSecondary">
             <button
               onClick={onClose}
               className="px-4 py-2 text-sm font-medium rounded-lg transition-colors bg-theme-bgSecondary hover:bg-theme-bgTertiary text-theme-textPrimary border border-theme-borderSecondary"

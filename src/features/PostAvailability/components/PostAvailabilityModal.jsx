@@ -95,7 +95,7 @@ const PostAvailabilityModal = ({ isOpen, onClose, onSubmitSuccess, editingAvaila
 
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-      <div className="bg-theme-bgPrimary border border-theme-borderPrimary rounded-2xl shadow-2xl w-full max-w-2xl h-[90vh] flex flex-col">
+      <div className="bg-theme-bgPrimary border border-theme-borderPrimary rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col">
         {/* Fixed Header */}
         <div className="flex-shrink-0 flex items-center justify-between p-6 border-b border-theme-borderSecondary">
           <div className="flex items-center gap-3">
@@ -120,7 +120,7 @@ const PostAvailabilityModal = ({ isOpen, onClose, onSubmitSuccess, editingAvaila
         </div>
 
         {/* Scrollable Body Content */}
-        <div className="flex-1 overflow-y-auto">
+        <div className="flex-1 overflow-y-auto min-h-0">
           <form onSubmit={handleSubmit} className="p-6">
             <div className="space-y-6">
               {/* Company Information */}
@@ -139,31 +139,7 @@ const PostAvailabilityModal = ({ isOpen, onClose, onSubmitSuccess, editingAvaila
                 />
               </div>
 
-              {/* Sector */}
-              <div>
-                <label className="block text-sm font-medium text-theme-textPrimary mb-2">
-                  Sector *
-                </label>
-                <select
-                  name="sector"
-                  value={formData.sector}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-3 bg-theme-bgSecondary border border-theme-borderSecondary rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-theme-textPrimary"
-                  required
-                >
-                  <option value="">Select sector</option>
-                  <option value="Information Technology">Information Technology</option>
-                  <option value="Banking">Banking</option>
-                  <option value="Oil & Gas">Oil & Gas</option>
-                  <option value="Financial Services">Financial Services</option>
-                  <option value="Paints & Chemicals">Paints & Chemicals</option>
-                  <option value="Automobile">Automobile</option>
-                  <option value="Pharmaceuticals">Pharmaceuticals</option>
-                  <option value="Real Estate">Real Estate</option>
-                  <option value="Consumer Goods">Consumer Goods</option>
-                  <option value="Others">Others</option>
-                </select>
-              </div>
+              
 
               {/* Quantity and Price */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

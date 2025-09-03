@@ -108,7 +108,7 @@ const PurchaseModal = ({ isOpen, onClose, onPurchaseSuccess, share }) => {
 
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-      <div className="bg-theme-bgPrimary border border-theme-borderPrimary rounded-2xl shadow-2xl w-full max-w-2xl h-[90vh] flex flex-col">
+      <div className="bg-theme-bgPrimary border border-theme-borderPrimary rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col">
         {/* Fixed Header */}
         <div className="flex-shrink-0 flex items-center justify-between p-6 border-b border-theme-borderSecondary">
           <div className="flex items-center gap-3">
@@ -129,7 +129,7 @@ const PurchaseModal = ({ isOpen, onClose, onPurchaseSuccess, share }) => {
         </div>
 
         {/* Scrollable Body Content */}
-        <div className="flex-1 overflow-y-auto">
+        <div className="flex-1 overflow-y-auto min-h-0">
           {/* Share Summary */}
           <div className="p-6 bg-theme-accentLight/5 border-b border-theme-borderSecondary">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
